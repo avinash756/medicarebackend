@@ -1,3 +1,5 @@
+// File: api/index.js
+
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -6,9 +8,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const dbPath = path.join(__dirname, "medicare.db"); // ✅ ensures DB is always in project folder
+const dbPath = path.join(__dirname, "../medicare.db");
 const db = new sqlite3.Database(dbPath);
-const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -122,5 +123,9 @@ app.get("/medications/adherence", (req, res) => {
   );
 });
 
+// Health check route
+app.get("/", (req, res) => {
+  res.send("Backend is live ✅");
+});
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app;
